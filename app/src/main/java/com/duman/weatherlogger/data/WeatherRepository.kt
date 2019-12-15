@@ -1,6 +1,6 @@
 package com.duman.weatherlogger.data
 
-import com.duman.weatherlogger.data.model.LatLong
+import com.mapbox.mapboxsdk.geometry.LatLng
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -11,19 +11,19 @@ class WeatherRepository : WeatherDataSource {
     private val service = RetrofitFactory.makeWeatherService()
     override fun getTempService(
         dataCallback: WeatherDataSource.TempDataCallback?,
-        latLong: LatLong
+        latLong: LatLng
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val weatherDataByLocation =
                     service.getWeatherDataByLocation(
-                        lat = latLong.lat,
-                        lon = latLong.long,
+                        lat = latLong.latitude,
+                        lon = latLong.longitude,
                         appId = "da7e3c9bc5982d3f299888c5d7bf46fe"
                     )
                 if (weatherDataByLocation.code() == 200 && weatherDataByLocation.isSuccessful) {
                     weatherDataByLocation.body()?.let {
-                        it.utcTime= Calendar.getInstance().timeInMillis
+                        it.utcTime = Calendar.getInstance().timeInMillis
                         dataCallback?.onLoadData(it)
                         return@launch
                     }

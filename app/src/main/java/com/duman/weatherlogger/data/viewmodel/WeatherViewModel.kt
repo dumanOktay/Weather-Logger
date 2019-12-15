@@ -8,16 +8,16 @@ import androidx.lifecycle.viewModelScope
 import com.duman.weatherlogger.data.WeatherDataSource
 import com.duman.weatherlogger.data.WeatherRepository
 import com.duman.weatherlogger.data.db.WeatherDbRepo
-import com.duman.weatherlogger.data.model.LatLong
 import com.duman.weatherlogger.data.model.WeatherData
 import com.google.android.gms.location.LocationServices
+import com.mapbox.mapboxsdk.geometry.LatLng
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(app: Application) : AndroidViewModel(app) {
     private val dataSource: WeatherDataSource = WeatherRepository()
     private val dbRepo = WeatherDbRepo(app)
 
-    var lastLoc = LatLong(0f, 0f)
+    var lastLoc = MutableLiveData<LatLng>()
 
     val weatherLiveData = MutableLiveData<WeatherData?>()
 
@@ -26,7 +26,7 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
         client.lastLocation.addOnSuccessListener { location: Location? ->
 
             if (location != null) {
-                lastLoc = LatLong(location.latitude.toFloat(), location.longitude.toFloat())
+                lastLoc.postValue(LatLng(location.latitude, location.longitude))
             }
             viewModelScope.launch {
                 getWeatherData()
@@ -36,9 +36,9 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun getWeatherList() = dbRepo.getWeatherList()
-    private fun getWeatherData() {
+    fun getWeatherData() {
         dataSource.getTempService(
-            latLong = lastLoc,
+            latLong = lastLoc.value ?: LatLng(0.0, 0.0),
             dataCallback = object : WeatherDataSource.TempDataCallback {
                 override fun onLoadData(data: WeatherData) {
                     weatherLiveData.postValue(data)
@@ -53,6 +53,9 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
 
     fun saveDataBase(data: WeatherData) {
         dbRepo.addWeatherData(data)
-        weatherLiveData.postValue(null)
+    }
+
+    fun updateLocation(loc: LatLng) {
+        lastLoc.postValue(loc)
     }
 }

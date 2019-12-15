@@ -10,7 +10,7 @@ interface WeatherService {
 
     @GET("data/2.5/weather")
     suspend fun getWeatherDataByLocation(
-        @Query("lat") lat: Float, @Query("lon") lon: Float, @Query(
+        @Query("lat") lat: Double, @Query("lon") lon: Double, @Query(
             "appid"
         ) appId: String
     ): Response<WeatherData>

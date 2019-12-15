@@ -1,7 +1,7 @@
 package com.duman.weatherlogger.data
 
-import com.duman.weatherlogger.data.model.LatLong
 import com.duman.weatherlogger.data.model.WeatherData
+import com.mapbox.mapboxsdk.geometry.LatLng
 
 interface WeatherDataSource {
 
@@ -11,5 +11,5 @@ interface WeatherDataSource {
         fun onFail(e: Exception)
     }
 
-    fun getTempService(dataCallback: TempDataCallback?, latLong: LatLong)
+    fun getTempService(dataCallback: TempDataCallback?, latLong: LatLng)
 }

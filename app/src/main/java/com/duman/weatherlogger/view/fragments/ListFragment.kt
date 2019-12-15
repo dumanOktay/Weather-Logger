@@ -3,7 +3,6 @@ package com.duman.weatherlogger.view.fragments
 
 import android.Manifest
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +10,11 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.RecyclerView
-import com.duman.weatherlogger.R
 import com.duman.weatherlogger.checkLocationPermisson
-import com.duman.weatherlogger.data.model.WeatherData
 import com.duman.weatherlogger.data.viewmodel.WeatherViewModel
 import com.duman.weatherlogger.databinding.FragmentListBinding
 import com.duman.weatherlogger.view.adapters.WeatherItemAdapter
 import kotlinx.android.synthetic.main.fragment_list.*
-import kotlinx.android.synthetic.main.item_weather.view.*
-import java.util.*
 
 
 /**
@@ -45,7 +39,7 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mModel = ViewModelProviders.of(this).get(WeatherViewModel::class.java)
+        mModel = ViewModelProviders.of(requireActivity()).get(WeatherViewModel::class.java)
 
         binding?.apply {
             model = mModel
@@ -58,11 +52,14 @@ class ListFragment : Fragment() {
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                 108
             )
-
         }
 
+        mModel.lastLoc.observe(viewLifecycleOwner, Observer {
+            mModel.getWeatherData()
+        })
 
-        val adapter = WeatherItemAdapter(mutableListOf(), mModel)
+
+        val adapter = WeatherItemAdapter(mutableListOf(), mModel, false)
         val liveAdapter = WeatherItemAdapter(mutableListOf(), mModel, true)
 
         weather_list_current.adapter = liveAdapter

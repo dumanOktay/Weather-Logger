@@ -53,10 +53,17 @@ class WeatherItemAdapter(
             val timeFormat: java.text.DateFormat? = DateFormat.getTimeFormat(context)
 
             date_tv.text = dateFormat?.format(date) + " : " + timeFormat?.format(date)
-
-            save_btn.visibility= if (fromDatabase) View.VISIBLE else View.GONE
+            save_btn.text = "Save"
+            save_btn.visibility = if (fromDatabase) View.VISIBLE else View.GONE
             save_btn.setOnClickListener {
                 viewModel.saveDataBase(data)
+                save_btn.text = "Refresh"
+                save_btn.setOnClickListener {
+                    viewModel.getWeatherData()
+                }
+            }
+            itemView.setOnClickListener {
+
             }
 
         }
