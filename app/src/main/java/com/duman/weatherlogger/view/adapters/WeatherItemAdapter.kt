@@ -1,13 +1,16 @@
 package com.duman.weatherlogger.view.adapters
 
+import android.app.Activity
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.duman.weatherlogger.R
 import com.duman.weatherlogger.data.model.WeatherData
 import com.duman.weatherlogger.data.viewmodel.WeatherViewModel
+import com.duman.weatherlogger.navigateDestination
 import kotlinx.android.synthetic.main.item_weather.view.*
 import java.util.*
 
@@ -46,7 +49,7 @@ class WeatherItemAdapter(
     inner class WeatherHolder(v: View) : RecyclerView.ViewHolder(v) {
 
         fun bind(data: WeatherData) = with(itemView) {
-            temp_tv.text = data.main.temp.toString() ?: ""
+            temp_tv.text = ""+data.main.temp+" \u2103"
             city_tv.text = data.name
             val date = Date(data.utcTime)
             val dateFormat: java.text.DateFormat? = DateFormat.getLongDateFormat(context)
@@ -62,9 +65,14 @@ class WeatherItemAdapter(
                     viewModel.getWeatherData()
                 }
             }
-            itemView.setOnClickListener {
 
+            setOnClickListener {
+                viewModel.selectedData = data
+                val activity = context as Activity
+                activity.navigateDestination(R.id.mapFragment)
             }
+            val icon = data.iconUrl
+            Glide.with(img).load("http://openweathermap.org/img/w/$icon.png").into(img)
 
         }
     }

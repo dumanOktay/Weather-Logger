@@ -19,6 +19,8 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
 
     var lastLoc = MutableLiveData<LatLng>()
 
+    var selectedData: WeatherData? = null
+
     val weatherLiveData = MutableLiveData<WeatherData?>()
 
     init {
@@ -46,6 +48,7 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
                 }
 
                 override fun onFail(e: Exception) {
+                    e.printStackTrace()
 //                    weatherLiveData.postValue("Data")
                 }
             })
@@ -58,4 +61,6 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
     fun updateLocation(loc: LatLng) {
         lastLoc.postValue(loc)
     }
+
+
 }

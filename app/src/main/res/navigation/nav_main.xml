@@ -9,10 +9,15 @@
         android:id="@+id/listFragment"
         android:name="com.duman.weatherlogger.view.fragments.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.duman.weatherlogger.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_listFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.duman.weatherlogger.view.fragments.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>

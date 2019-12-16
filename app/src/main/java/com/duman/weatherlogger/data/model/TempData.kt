@@ -1,6 +1,3 @@
 package com.duman.weatherlogger.data.model
 
-data class TempData(
-
-    val temp: Float
-)
+data class TempData(var temp: Float)

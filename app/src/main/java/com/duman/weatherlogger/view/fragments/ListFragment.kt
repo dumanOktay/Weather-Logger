@@ -10,7 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.duman.weatherlogger.checkLocationPermisson
+import com.duman.weatherlogger.checkLocationPermission
 import com.duman.weatherlogger.data.viewmodel.WeatherViewModel
 import com.duman.weatherlogger.databinding.FragmentListBinding
 import com.duman.weatherlogger.view.adapters.WeatherItemAdapter
@@ -20,11 +20,9 @@ import kotlinx.android.synthetic.main.fragment_list.*
 /**
  * A simple [Fragment] subclass.
  */
-class ListFragment : Fragment() {
+class ListFragment : BaseFragment() {
 
     private var binding: FragmentListBinding? = null
-
-    private lateinit var mModel: WeatherViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,14 +37,12 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mModel = ViewModelProviders.of(requireActivity()).get(WeatherViewModel::class.java)
-
         binding?.apply {
             model = mModel
         }
         binding?.lifecycleOwner = this
 
-        if (activity?.checkLocationPermisson() != true) {
+        if (activity?.checkLocationPermission() != true) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
