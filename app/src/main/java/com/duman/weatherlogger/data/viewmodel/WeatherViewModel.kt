@@ -1,6 +1,7 @@
 package com.duman.weatherlogger.data.viewmodel
 
 import android.app.Application
+import android.content.Context
 import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -23,19 +24,7 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
 
     val weatherLiveData = MutableLiveData<WeatherData?>()
 
-    init {
-        val client = LocationServices.getFusedLocationProviderClient(app)
-        client.lastLocation.addOnSuccessListener { location: Location? ->
 
-            if (location != null) {
-                lastLoc.postValue(LatLng(location.latitude, location.longitude))
-            }
-            viewModelScope.launch {
-                getWeatherData()
-            }
-        }
-
-    }
 
     fun getWeatherList() = dbRepo.getWeatherList()
     fun getWeatherData() {
@@ -60,6 +49,19 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
 
     fun updateLocation(loc: LatLng) {
         lastLoc.postValue(loc)
+    }
+
+    fun fetchLastLocation(context: Context) {
+        val client = LocationServices.getFusedLocationProviderClient(context)
+        client.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                lastLoc.postValue(LatLng(location.latitude, location.longitude))
+            }
+            viewModelScope.launch {
+                getWeatherData()
+            }
+        }
+
     }
 
 

@@ -2,10 +2,13 @@ package com.duman.weatherlogger.view.fragments
 
 
 import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,6 +37,7 @@ class ListFragment : BaseFragment() {
         return binding?.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -43,11 +47,12 @@ class ListFragment : BaseFragment() {
         binding?.lifecycleOwner = this
 
         if (activity?.checkLocationPermission() != true) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
+            requestPermissions(
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                108
+                REQUEST_LOCATION
             )
+        } else {
+            mModel.fetchLastLocation(requireContext())
         }
 
         mModel.lastLoc.observe(viewLifecycleOwner, Observer {
@@ -72,6 +77,25 @@ class ListFragment : BaseFragment() {
             }
         })
 
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        Toast.makeText(requireContext(), "ssss", Toast.LENGTH_SHORT).show()
+
+        if (requestCode == REQUEST_LOCATION && permissions[0] == Manifest.permission.ACCESS_COARSE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            mModel.fetchLastLocation(requireContext())
+        }
+
+    }
+
+    companion object {
+        private const val REQUEST_LOCATION = 108
     }
 
 

@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.duman.weatherlogger.R
+import com.duman.weatherlogger.toCelcisus
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.annotations.MarkerOptions
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
-import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlin.math.roundToInt
@@ -39,9 +39,17 @@ class MapFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initMap(savedInstanceState)
+        temp_tv.text = getCelsius()
+        city_tv.text = mModel.selectedData?.name
+        temp_max.text= mModel.selectedData?.main?.temp_max?.toCelcisus()
+        temp_min.text= mModel.selectedData?.main?.temp_min?.toCelcisus()
+    }
+
+    private fun initMap(savedInstanceState: Bundle?) {
         map.onCreate(savedInstanceState)
 
-        map.getMapAsync(OnMapReadyCallback {
+        map.getMapAsync {
             it.setStyle(Style.OUTDOORS)
             val coord = mModel.selectedData?.coord
 
@@ -57,17 +65,17 @@ class MapFragment : BaseFragment() {
             it.animateCamera(
                 CameraUpdateFactory
                     .newCameraPosition(position), 7000
-
-
             )
 
             it.addMarker(
                 MarkerOptions()
                     .position(latLng)
-                    .title("" + mModel.selectedData?.main?.temp?.roundToInt() + "\u2103")
+                    .title(getCelsius())
             )
-        })
+        }
     }
+
+    private fun getCelsius() = "" + mModel.selectedData?.main?.temp?.toCelcisus()
 
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -83,6 +91,11 @@ class MapFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         map.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        map.onPause()
     }
 
 }

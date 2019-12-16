@@ -1,19 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.MapFragment">
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/map"
-        mapbox:mapbox_cameraTilt="59"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintEnd_toEndOf="parent"
+        mapbox:layout_constraintHorizontal_bias="0.5"
+        mapbox:layout_constraintStart_toStartOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent"
+        mapbox:layout_constraintVertical_bias="0.95"
         mapbox:mapbox_cameraBearing="180"
         mapbox:mapbox_cameraTargetLat="40.73581"
         mapbox:mapbox_cameraTargetLng="-73.99155"
+        mapbox:mapbox_cameraTilt="59"
         mapbox:mapbox_cameraZoom="11" />
 
-</FrameLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        mapbox:cardBackgroundColor="#88FFFFFF"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintEnd_toEndOf="parent"
+        mapbox:layout_constraintHeight_percent=".4"
+        mapbox:layout_constraintHorizontal_bias="0.5"
+        mapbox:layout_constraintStart_toStartOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent"
+        mapbox:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+
+                android:id="@+id/temp_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="9 \u2103"
+                android:textColor="@android:color/black"
+                android:textSize="102dp"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintStart_toStartOf="parent"
+                mapbox:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+
+                android:id="@+id/city_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="9 \u2103"
+                android:textColor="@android:color/black"
+                android:textSize="48dp"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Max:"
+                android:textSize="24sp"
+                android:textColor="@android:color/black"
+                mapbox:layout_constraintBottom_toTopOf="@+id/temp_tv"
+                mapbox:layout_constraintStart_toStartOf="@+id/temp_tv"
+                mapbox:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/temp_max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="Max:"
+                android:textSize="24sp"
+                android:textColor="@android:color/black"
+                mapbox:layout_constraintBottom_toTopOf="@+id/temp_tv"
+                mapbox:layout_constraintStart_toEndOf="@+id/textView2"
+                mapbox:layout_constraintTop_toTopOf="parent"
+                mapbox:layout_constraintVertical_bias="0.492" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Min"
+                android:textSize="24sp"
+                android:textColor="@android:color/black"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintStart_toStartOf="@+id/temp_tv"
+                mapbox:layout_constraintTop_toBottomOf="@+id/temp_tv" />
+
+            <TextView
+                android:id="@+id/temp_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="Min"
+                android:textSize="24sp"
+                android:textColor="@android:color/black"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintStart_toEndOf="@+id/textView6"
+                mapbox:layout_constraintTop_toBottomOf="@+id/temp_tv"
+                mapbox:layout_constraintVertical_bias="0.48" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
