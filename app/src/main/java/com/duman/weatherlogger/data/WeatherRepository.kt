@@ -25,9 +25,9 @@ class WeatherRepository : WeatherDataSource {
                 if (weatherDataByLocation.code() == 200 && weatherDataByLocation.isSuccessful) {
                     weatherDataByLocation.body()?.let {
                         it.iconUrl = it.weather?.get(0)?.icon ?: "03d"
-                        it.coord.lat= latLong.latitude
-                        it.main.temp= "%.2f".format(it.main.temp.minus(272.15)).toFloat()
-                        it.coord.lon= latLong.longitude
+                        it.coord.lat = latLong.latitude
+                        it.main.temp = it.main.temp.minus(272.15f)
+                        it.coord.lon = latLong.longitude
                         it.utcTime = Calendar.getInstance().timeInMillis
                         dataCallback?.onLoadData(it)
                         return@launch

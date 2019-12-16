@@ -15,6 +15,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
 import kotlinx.android.synthetic.main.fragment_map.*
+import kotlin.math.roundToInt
 
 
 /**
@@ -47,7 +48,7 @@ class MapFragment : BaseFragment() {
             val latLng = LatLng(coord?.lat ?: 0.0, coord?.lon ?: 0.0)
             val position = CameraPosition.Builder()
                 .target(latLng) // Sets the new camera position
-                .zoom(15.0) // Sets the zoom
+                .zoom(10.0) // Sets the zoom
                 .bearing(0.0) // Rotate the camera
                 .tilt(30.0) // Set the camera tilt
                 .build() // Creates a CameraPosition from the builder
@@ -63,7 +64,7 @@ class MapFragment : BaseFragment() {
             it.addMarker(
                 MarkerOptions()
                     .position(latLng)
-                    .title("Eiffel Tower")
+                    .title("" + mModel.selectedData?.main?.temp?.roundToInt() + "\u2103")
             )
         })
     }

@@ -13,6 +13,7 @@ import com.duman.weatherlogger.data.viewmodel.WeatherViewModel
 import com.duman.weatherlogger.navigateDestination
 import kotlinx.android.synthetic.main.item_weather.view.*
 import java.util.*
+import kotlin.math.roundToInt
 
 class WeatherItemAdapter(
     private val weatherList: MutableList<WeatherData>,
@@ -49,7 +50,7 @@ class WeatherItemAdapter(
     inner class WeatherHolder(v: View) : RecyclerView.ViewHolder(v) {
 
         fun bind(data: WeatherData) = with(itemView) {
-            temp_tv.text = ""+data.main.temp+" \u2103"
+            temp_tv.text = ""+data.main.temp.roundToInt()+" \u2103"
             city_tv.text = data.name
             val date = Date(data.utcTime)
             val dateFormat: java.text.DateFormat? = DateFormat.getLongDateFormat(context)
