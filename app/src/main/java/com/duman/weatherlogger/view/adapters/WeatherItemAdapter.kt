@@ -1,6 +1,5 @@
 package com.duman.weatherlogger.view.adapters
 
-import android.app.Activity
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +9,15 @@ import com.bumptech.glide.Glide
 import com.duman.weatherlogger.R
 import com.duman.weatherlogger.data.model.WeatherData
 import com.duman.weatherlogger.data.viewmodel.WeatherViewModel
-import com.duman.weatherlogger.navigateDestination
 import com.duman.weatherlogger.toCelcisus
+import com.mapbox.mapboxsdk.geometry.LatLng
 import kotlinx.android.synthetic.main.item_weather.view.*
 import java.util.*
-import kotlin.math.roundToInt
 
 class WeatherItemAdapter(
     private val weatherList: MutableList<WeatherData>,
     val viewModel: WeatherViewModel,
-    val fromDatabase: Boolean = false
+    val func: () -> Unit
 ) :
     RecyclerView.Adapter<WeatherItemAdapter.WeatherHolder>() {
 
@@ -43,6 +41,15 @@ class WeatherItemAdapter(
         notifyDataSetChanged()
     }
 
+    fun addData(data: WeatherData){
+        if (weatherList.contains(data).not()){
+            weatherList.add(0,data)
+            notifyItemInserted(0)
+
+        }
+    }
+
+
     override fun onBindViewHolder(holder: WeatherHolder, position: Int) {
         holder.bind(weatherList[position])
     }
@@ -50,28 +57,21 @@ class WeatherItemAdapter(
 
     inner class WeatherHolder(v: View) : RecyclerView.ViewHolder(v) {
 
+        var data: WeatherData? = null
         fun bind(data: WeatherData) = with(itemView) {
-            temp_tv.text = ""+data.main.temp.toCelcisus()
+            this@WeatherHolder.data = data
+            temp_tv.text = "" + data.main.temp.toCelcisus()
             city_tv.text = data.name
             val date = Date(data.utcTime)
             val dateFormat: java.text.DateFormat? = DateFormat.getLongDateFormat(context)
             val timeFormat: java.text.DateFormat? = DateFormat.getTimeFormat(context)
 
             date_tv.text = dateFormat?.format(date) + " : " + timeFormat?.format(date)
-            save_btn.text = "Save"
-            save_btn.visibility = if (fromDatabase) View.VISIBLE else View.GONE
-            save_btn.setOnClickListener {
-                viewModel.saveDataBase(data)
-                save_btn.text = "Refresh"
-                save_btn.setOnClickListener {
-                    viewModel.getWeatherData()
-                }
-            }
 
             setOnClickListener {
-                viewModel.selectedData = data
-                val activity = context as Activity
-                activity.navigateDestination(R.id.mapFragment)
+                viewModel.updateLocation(LatLng(data.coord.lat, data.coord.lon))
+                func.invoke()
+
             }
             val icon = data.iconUrl
             Glide.with(img).load("http://openweathermap.org/img/w/$icon.png").into(img)

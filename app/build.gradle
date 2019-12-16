@@ -14,6 +14,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -73,5 +74,7 @@ dependencies {
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.5.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-places-v8:0.9.0'
     implementation 'com.github.bumptech.glide:glide:4.10.0'
+//    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
 }

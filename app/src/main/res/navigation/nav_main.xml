@@ -3,17 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/mapFragment">
 
     <fragment
         android:id="@+id/listFragment"
         android:name="com.duman.weatherlogger.view.fragments.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" >
-        <action
-            android:id="@+id/action_listFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_list" />
 
     <fragment
         android:id="@+id/mapFragment"

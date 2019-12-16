@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.MapFragment">
 
     <com.mapbox.mapboxsdk.maps.MapView
@@ -80,8 +81,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Max:"
-                android:textSize="24sp"
                 android:textColor="@android:color/black"
+                android:textSize="24sp"
                 mapbox:layout_constraintBottom_toTopOf="@+id/temp_tv"
                 mapbox:layout_constraintStart_toStartOf="@+id/temp_tv"
                 mapbox:layout_constraintTop_toTopOf="parent" />
@@ -93,8 +94,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:text="Max:"
-                android:textSize="24sp"
                 android:textColor="@android:color/black"
+                android:textSize="24sp"
                 mapbox:layout_constraintBottom_toTopOf="@+id/temp_tv"
                 mapbox:layout_constraintStart_toEndOf="@+id/textView2"
                 mapbox:layout_constraintTop_toTopOf="parent"
@@ -105,8 +106,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Min"
-                android:textSize="24sp"
                 android:textColor="@android:color/black"
+                android:textSize="24sp"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintStart_toStartOf="@+id/temp_tv"
                 mapbox:layout_constraintTop_toBottomOf="@+id/temp_tv" />
@@ -118,15 +119,42 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:text="Min"
-                android:textSize="24sp"
                 android:textColor="@android:color/black"
+                android:textSize="24sp"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintStart_toEndOf="@+id/textView6"
                 mapbox:layout_constraintTop_toBottomOf="@+id/temp_tv"
                 mapbox:layout_constraintVertical_bias="0.48" />
+
+            <TextView
+                android:id="@+id/tv_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="History"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="24sp"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintTop_toBottomOf="@+id/city_tv" />
+
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Save"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="24sp"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintTop_toBottomOf="@+id/tv_history" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
 
 
 
