@@ -17,8 +17,6 @@ class WeatherDbRepo(application: Application) : CoroutineScope {
     init {
         val db = WeatherDatabase.getDatabase(application)
         weatherDao = db?.getWeatherDao()
-
-
     }
 
     fun getWeatherList() = weatherDao?.getWeatherList()

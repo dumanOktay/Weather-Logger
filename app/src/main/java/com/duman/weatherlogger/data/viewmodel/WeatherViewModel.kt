@@ -18,12 +18,13 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
     private val dataSource: WeatherDataSource = WeatherRepository()
     private val dbRepo = WeatherDbRepo(app)
 
+    var errorMessage = MutableLiveData<String>()
+
     var lastLoc = MutableLiveData<LatLng>()
 
     var selectedData: WeatherData? = null
 
     val weatherLiveData = MutableLiveData<WeatherData?>()
-
 
 
     fun getWeatherList() = dbRepo.getWeatherList()
@@ -37,6 +38,7 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
                 }
 
                 override fun onFail(e: Exception) {
+                    setErrorMessage("" + e.message)
                     e.printStackTrace()
 //                    weatherLiveData.postValue("Data")
                 }
@@ -51,6 +53,10 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
         lastLoc.postValue(loc)
     }
 
+    fun setErrorMessage(str: String) {
+        errorMessage.postValue(str)
+    }
+
     fun fetchLastLocation(context: Context) {
         val client = LocationServices.getFusedLocationProviderClient(context)
         client.lastLocation.addOnSuccessListener { location: Location? ->
@@ -61,8 +67,5 @@ class WeatherViewModel(app: Application) : AndroidViewModel(app) {
                 getWeatherData()
             }
         }
-
     }
-
-
 }
