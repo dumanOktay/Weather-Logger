@@ -86,8 +86,6 @@ class ListFragment : BaseFragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        Toast.makeText(requireContext(), "ssss", Toast.LENGTH_SHORT).show()
-
         if (requestCode == REQUEST_LOCATION && permissions[0] == Manifest.permission.ACCESS_COARSE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             mModel.fetchLastLocation(requireContext())
         }
