@@ -1,8 +1,6 @@
 package com.duman.weatherlogger.data.db
 
 import android.content.Context
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -45,11 +43,9 @@ class WeatherDatabaseTest {
         )
 
         weatherDao.insertWeatherData(weatherData)
-
-        val d = weatherDao.getWeatherList().observeForever(Observer {
-            it
-        })
         Thread.sleep(500)
+        val d = weatherDao.getWeatherList().value?.get(0)?.name
+
         assertEquals("Riga", d)
     }
 }
