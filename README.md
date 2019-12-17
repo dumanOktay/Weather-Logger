@@ -56,7 +56,7 @@ Accenture Latvia Development Task
 
 
 
-<img src="device-2019-12-16-221914.png" alt="device-2019-12-16-221914" style="zoom:20%;" />
+<img src="device-2019-12-17-032821.png" alt="device-2019-12-16-221914" style="zoom:20%;" />
 
 
 
@@ -64,6 +64,6 @@ Accenture Latvia Development Task
 
 
 
-<img src="device-2019-12-16-221733.png" alt="device-2019-12-16-221733" style="zoom:20%;" />
+<img src="device-2019-12-17-032752.png" alt="device-2019-12-16-221733" style="zoom:20%;" />
 
 <img src="device-2019-12-16-222918.png" alt="device-2019-12-6-222918" style="zoom:20%;" />
